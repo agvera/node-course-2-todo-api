@@ -99,15 +99,7 @@ app.patch('/todos/:id', authenticate, (req,res) => {
         body.completedAt = null
     }
 
-    Todo.findOneAndUpdate({
-        id: _id,
-        _createdBy: req.user._id
-    }, {
-        $set: body
-    }, {
-        new: true
-    }
-    ).then((todo) => {
+    Todo.findOneAndUpdate({_id: id, _createdBy: req.user._id}, {$set: body}, {new: true}).then((todo) => {
         if(!todo){
             res.status(404).send()
         }
